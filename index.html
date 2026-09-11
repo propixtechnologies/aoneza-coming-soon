@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aoneza — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: 'Poppins', sans-serif;
+    background:#ffffff;
+    color:#0a0a0a;
+    text-align:center;
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* subtle background texture */
+  body::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(0,0,0,0.035) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(0,0,0,0.035) 0%, transparent 40%);
+    pointer-events:none;
+  }
+
+  .container {
+    max-width:640px;
+    position:relative;
+    z-index:1;
+  }
+
+  .logo {
+    width: min(70vw, 340px);
+    margin-bottom: 40px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.08));
+    animation: fadeDown 0.9s ease both;
+  }
+
+  h1 {
+    font-size: clamp(1.4rem, 4vw, 2.1rem);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    animation: fadeUp 0.9s ease 0.15s both;
+  }
+
+  p.tagline {
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    color:#555;
+    margin-bottom: 40px;
+    animation: fadeUp 0.9s ease 0.3s both;
+  }
+
+  .countdown {
+    display:flex;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 42px;
+    animation: fadeUp 0.9s ease 0.45s both;
+  }
+  .countdown div {
+    background:#0a0a0a;
+    color:#fff;
+    padding: 16px 18px;
+    border-radius: 4px;
+    min-width: 74px;
+  }
+  .countdown span {
+    display:block;
+    font-size: 1.5rem;
+    font-weight:700;
+    letter-spacing:1px;
+  }
+  .countdown small {
+    color:#aaa;
+    font-size:0.68rem;
+    letter-spacing:1.5px;
+  }
+
+  form {
+    display:flex;
+    gap:0;
+    justify-content:center;
+    flex-wrap:wrap;
+    max-width: 420px;
+    margin: 0 auto 30px;
+    border: 1.5px solid #0a0a0a;
+    border-radius: 4px;
+    overflow:hidden;
+    animation: fadeUp 0.9s ease 0.6s both;
+  }
+  input[type="email"] {
+    flex:1;
+    padding:14px 16px;
+    border:none;
+    outline:none;
+    font-size:0.95rem;
+    min-width: 180px;
+  }
+  button {
+    padding:14px 26px;
+    border:none;
+    background:#0a0a0a;
+    color:#fff;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:0.8rem;
+    cursor:pointer;
+    transition: background 0.2s ease;
+  }
+  button:hover { background:#333; }
+
+  .social {
+    animation: fadeUp 0.9s ease 0.75s both;
+  }
+  .social a {
+    color:#0a0a0a;
+    margin:0 10px;
+    text-decoration:none;
+    font-size:0.8rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .social a:hover { border-color:#0a0a0a; }
+
+  @keyframes fadeDown {
+    from { opacity:0; transform:translateY(-16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img src="aoneza-logo.png" alt="Aoneza" class="logo">
+    <h1>Something New Is Coming</h1>
+    <p class="tagline">We're crafting a brand new experience for you. Stay tuned.</p>
+
+    <div class="countdown" id="countdown">
+      <div><span id="days">00</span><small>DAYS</small></div>
+      <div><span id="hours">00</span><small>HOURS</small></div>
+      <div><span id="minutes">00</span><small>MIN</small></div>
+      <div><span id="seconds">00</span><small>SEC</small></div>
+    </div>
+
+    <form onsubmit="return false;">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Notify Me</button>
+    </form>
+
+    <div class="social">
+      <a href="#">Instagram</a> · <a href="#">LinkedIn</a> · <a href="#">Twitter</a>
+    </div>
+  </div>
+
+<script>
+  // Set your launch date here (YYYY-MM-DDTHH:mm:ss)
+  const launchDate = new Date("2026-12-31T00:00:00").getTime();
+
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    if (distance < 0) {
+      clearInterval(timer);
+      document.getElementById("countdown").innerHTML = "<p style='color:#0a0a0a;font-size:1.2rem;'>We're live!</p>";
+      return;
+    }
+
+    document.getElementById("days").innerText = String(Math.floor(distance / (1000*60*60*24))).padStart(2,'0');
+    document.getElementById("hours").innerText = String(Math.floor((distance % (1000*60*60*24)) / (1000*60*60))).padStart(2,'0');
+    document.getElementById("minutes").innerText = String(Math.floor((distance % (1000*60*60)) / (1000*60))).padStart(2,'0');
+    document.getElementById("seconds").innerText = String(Math.floor((distance % (1000*60)) / 1000)).padStart(2,'0');
+  }, 1000);
+</script>
+</body>
+</html>
